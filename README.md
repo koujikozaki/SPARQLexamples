@@ -7,6 +7,10 @@
 https://query.wikidata.org/      
 ※プログラムからアクセスする場合は，こちら https://query.wikidata.org/sparql  　
 
+## 参考資料
+### Wikidataを使った日本の政治家の出身大学ランキング
+https://qiita.com/koujikozaki/items/a049e2ac1051e0e43be6
+
 ### Wikidataのプロパティ一覧（抜粋）
 https://www.wikidata.org/wiki/Wikidata:List_of_properties
 
@@ -19,14 +23,55 @@ https://prefix.cc/
 
 ---
 
-# 関心のあるリソースのIRIを探す
+# 関心のあるリソースのIRI(ID)を探す
 
 例）大阪大学のWikidata上でのIRI　　
-
 [http://www.wikidata.org/entity/Q651233](http://www.wikidata.org/entity/Q651233)
 
 ---
+# 検索例１：主語と述語を指定
+## 例1-1）「大阪大学」の「設立年」となる目的語（?o）を取得
 
+```
+select ?o
+where {
+   wd:Q651233 wdt:P571 ?o .
+}LIMIT 100
+```
+クエリを試す　http://tinyurl.com/y9exqqgg
+
+
+## 例1-2）「大阪大学」の「本部所在地」となる目的語（?o）を取得
+
+```
+select ?o
+where {
+   wd:Q651233 wdt:P159 ?o .
+}
+```
+クエリを試す　http://tinyurl.com/yd9qggrx
+
+## 例1-3）「大阪大学」の「本部所在地」となる　　　目的語（?o）を取得  
+※検索結果がデータのIDとなる場合，下記の記述を　追加することで「ラベル」をあわせて取得可能
+
+```
+select ?o ?oLabel
+where {
+   wd:Q651233 wdt:P159 ?o .
+SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+}
+```
+クエリを試す　http://tinyurl.com/ydbuq5ou
+
+---
+
+------------
+
+
+
+
+
+---
 # 検索例１：主語のみ指定
 「大阪大学」を主語（Subject）に含むトリプルの述語（?p）と目的語（?o）を取得する　
 
