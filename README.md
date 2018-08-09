@@ -51,8 +51,8 @@ where {
 ```
 クエリを試す　http://tinyurl.com/yd9qggrx
 
-## 例1-3）「大阪大学」の「本部所在地」となる　　　目的語（?o）を取得  
-※検索結果がデータのIDとなる場合，下記の記述を　追加することで「ラベル」をあわせて取得可能
+## 例1-3）「大阪大学」の「本部所在地」となる目的語（?o）を取得  
+※検索結果がデータのIDとなる場合，下記の記述を追加することで「ラベル」をあわせて取得可能
 
 ```
 select ?o ?oLabel
@@ -64,8 +64,28 @@ SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja".
 クエリを試す　http://tinyurl.com/ydbuq5ou
 
 ---
+# 検索例2：複数の述語を指定して，目的語を取得する
+## 例2-1：「大阪大学」の“本部所在地”と“創立日”取得する
+```
+select ?o1 ?o1Label ?o2
+where {
+  wd:Q651233 wdt:P159 ?o1.
+  wd:Q651233 wdt:P571 ?o2.
+SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+}
+```
+クエリを試す　http://tinyurl.com/ydgpgftp
 
-------------
+## 例2-2）「大阪大学」の“本部所在地”の“行政区（何県にあるか？）”を取得する
+```
+select ?o1 ?o1Label ?o2 ?o2Label
+where {
+  wd:Q651233 wdt:P159 ?o1.
+  ?o1 wdt:P131 ?o2.
+SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+}
+```
+クエリを試す　http://tinyurl.com/yd5d5bfd
 
 
 
