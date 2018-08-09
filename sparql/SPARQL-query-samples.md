@@ -1,22 +1,21 @@
 
-# 必要なリンク集
-## SPARQL 1.1 Query Language (W3C Recommendation)
-https://www.w3.org/TR/sparql11-query/   
-→日本語訳　http://www.asahi-net.or.jp/~ax2s-kmtn/internet/rdf/REC-sparql11-query-20130321.html
+# Wikidataを例としたSPARQLの基本クエリ例
+---
 
-## WikidataのSPARQLエンドポイント（検索用API）
+## 必要なリンク集
+### WikidataのSPARQLエンドポイント（検索用API）
 https://query.wikidata.org/      
 ※プログラムからアクセスする場合は，こちら https://query.wikidata.org/sparql  　
 
-## PREFIXの検索サービス
-https://prefix.cc/
-
-## Wikidataのプロパティ一覧（抜粋）
+### Wikidataのプロパティ一覧（抜粋）
 https://www.wikidata.org/wiki/Wikidata:List_of_properties
 
-## Wikidataのクラス一覧
-※独自にWikidataを解析して抽出したものであるため，実際のデータと一致しな部分が含まれる可能性があります．
-https://docs.google.com/spreadsheets/d/1e2r9w-PnAroO4MTAMJGfw-bZV7r68Xul-UtK6QbrK_w/edit#gid=0
+### SPARQL 1.1 Query Language (W3C Recommendation)
+https://www.w3.org/TR/sparql11-query/   
+→日本語訳　http://www.asahi-net.or.jp/~ax2s-kmtn/internet/rdf/REC-sparql11-query-20130321.html
+
+### PREFIXの検索サービス
+https://prefix.cc/
 
 ---
 
