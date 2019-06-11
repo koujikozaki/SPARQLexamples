@@ -1,10 +1,9 @@
 # SPARQLを用いたWikidataの検索演習
+WikidataのSPARQLエンドポイント（検索用API）  　
+https://query.wikidata.org/  　    
+を使った，SPARQLクエリの演習問題．  
 
-## WikidataのSPARQLエンドポイント（検索用API）
-https://query.wikidata.org/      
-※プログラムからアクセスする場合は，こちら https://query.wikidata.org/sparql  　
-
-
+検索例を試した後，検索例のクエリの「一部を変更」して，いろんなクエリを作成してみる．
 
 ---------------
 # 検索例１：主語と述語を指定して「目的語」を取得する
@@ -153,6 +152,7 @@ where {
 LIMIT 100
 ```
 クエリを試す https://w.wiki/4on
+
 ---------------
 
 ## 検索例3-3 「日本にある大学の一覧」を「設立日」と共に取得する　
@@ -169,23 +169,42 @@ LIMIT 100
 ```
 クエリを試す https://w.wiki/4os
 
+### 検索例3-3-a 「設立日」で並び替え
+```
+select ?s ?sLabel ?o
+where {
+   ?s wdt:P31 wd:Q3918 . # ?Sの「分類」が「大学」
+   ?s wdt:P17 wd:Q17 .   # ?sの「国」が「日本」
+   ?s wdt:P571 ?o .      # ?sの「設立」を?oとする
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+}ORDER BY ?o    # ?o(設立日)で並び替え →DESC(?o)とする「降順」に
+LIMIT 100
+```
+クエリを試す　https://w.wiki/4ou
+
+---------------
+## 【演習３】いろんなデータの一覧を取得してみる
+### 演習3-a：「目的語」を変えて，データ一覧の「絞り込み」をする
+**「検索例3-2」**  の **「述語」と「目的語」の組み合わせ** を変える  
+
+### 演習3-b：いろんなデータ一覧を取得する
+**「検索例3-1,2,3」**  を変えて，いろんなデータ一覧を取得してみる  
+
 ---------------
 
-# 参考なリンク集
+# 参考リンク集
+## より複雑なクエリの例
+- Wikidataを使った日本の政治家の出身大学ランキング  
+http://bit.ly/2PBt8fn  
+- Wikidataを使って鉄道会社ごとの総路線長をランキングしてみる  
+https://qiita.com/RK-miha/items/6d94f425871c4e9f5f73
+- Wikidat公式サイトのサンプルクエリ集
+https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/queries/examples
+
 ## SPARQL 1.1 Query Language (W3C Recommendation)
 https://www.w3.org/TR/sparql11-query/   
 →日本語訳　http://www.asahi-net.or.jp/~ax2s-kmtn/internet/rdf/REC-sparql11-query-20130321.html
 
-
 ## Wikidataのプロパティ一覧（抜粋）
 https://www.wikidata.org/wiki/Wikidata:List_of_properties
-
----
-
-# 関心のあるリソースのIRIを探す
-
-例）大阪電気通信大学のWikidata上でのIRI　　
-
-[http://www.wikidata.org/entity/Q7105556](http://www.wikidata.org/entity/Q7105556)
-
 
