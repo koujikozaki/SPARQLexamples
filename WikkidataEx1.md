@@ -113,7 +113,63 @@ LIMIT 100
 **「検索例2-1」**  の **「述語」** や **「目的語」** を変える  
 
 ---------------
+# 検索例３：「主語」の一覧の「絞り込み」
+## 検索例3-1 「大学の一覧（主語）」を「国（述語）」の「目的語(?contry）」と共に取得する　
 
+```
+select ?s ?sLabel?contry ?contryLabel
+where {
+   ?s wdt:P31 wd:Q3918 .
+   ?s wdt:P17 ?contry .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+}
+LIMIT 100
+```
+クエリを試す https://w.wiki/4om
+
+---------------
+## 検索例3-2 「大学の一覧」を「国（述語）が日本（目的語）」のものに絞り込む　
+
+```
+select ?s ?sLabel
+where {
+   ?s wdt:P31 wd:Q3918 .
+   ?s wdt:P17 wd:Q17 .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+}
+LIMIT 100
+```
+クエリを試す https://w.wiki/4oo  
+  
+※**「国が日本」** であることを確認した場合．
+```
+select ?s ?sLabel?contry ?contryLabel
+where {
+   ?s wdt:P31 wd:Q3918 .
+   ?s wdt:P17 ?contry .
+   ?s wdt:P17 wd:Q17 .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+}
+LIMIT 100
+```
+クエリを試す https://w.wiki/4on
+---------------
+
+## 検索例3-3 「日本にある大学の一覧」を「設立日」と共に取得する　
+
+```
+select ?s ?sLabel ?o
+where {
+   ?s wdt:P31 wd:Q3918 . # ?Sの「分類」が「大学」
+   ?s wdt:P17 wd:Q17 .   # ?sの「国」が「日本」
+   ?s wdt:P571 ?o .      # ?sの「設立」を?oとする
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+}
+LIMIT 100
+```
+クエリを試す https://w.wiki/4os
+
+---------------
 
 # 参考なリンク集
 ## SPARQL 1.1 Query Language (W3C Recommendation)
