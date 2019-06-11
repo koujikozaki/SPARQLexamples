@@ -1,23 +1,9 @@
-
-# 必要なリンク集
-## SPARQL 1.1 Query Language (W3C Recommendation)
-https://www.w3.org/TR/sparql11-query/   
-→日本語訳　http://www.asahi-net.or.jp/~ax2s-kmtn/internet/rdf/REC-sparql11-query-20130321.html
+# SPARQLを用いたWikidataの検索演習
 
 ## WikidataのSPARQLエンドポイント（検索用API）
 https://query.wikidata.org/      
 ※プログラムからアクセスする場合は，こちら https://query.wikidata.org/sparql  　
 
-## Wikidataのプロパティ一覧（抜粋）
-https://www.wikidata.org/wiki/Wikidata:List_of_properties
-
----
-
-# 関心のあるリソースのIRIを探す
-
-例）大阪電気通信大学のWikidata上でのIRI　　
-
-[http://www.wikidata.org/entity/Q7105556](http://www.wikidata.org/entity/Q7105556)
 
 
 ---------------
@@ -75,19 +61,75 @@ where {
 クエリを試す　https://w.wiki/4of
 
 ---------------
-# 【演習１】主語と述語を指定して「目的語」を取得する
-## 演習1-a：「述語」を変えてみる
+## 【演習１】主語と述語を指定して「目的語」を取得する
+### 演習1-a：「述語」を変えてみる
 **「検索例１-1，2, 3」**  の **「述語」** を変えて，「大阪電気通信大学」（主語）のいろんな情報（目的語?o）を取得してみる  
 述語のIDは「大阪電気通信大学」の[Wikidataのページ](https://www.wikidata.org/wiki/Q7105556)を見て探す．  
 →プロパティにマウスを持っていくと表示される「P○○○」の番号を使えばよい．
 
-## 演習1-b：「主語」を変えてみる
+### 演習1-b：「主語」を変えてみる
 **「検索例１-1，2, 3」**  の **「主語」** を変えて，いろんな主語の情報（目的語?o）を取得してみる  
 主語のIDは，探したいデータの「Wikidataのページ」（Wikipediaのページ→「ウィキデータ項目」のリンク）を見て探す．  
 →ページ上部の「Q○○○○○○」の番号を使えばよい．
 
 ---------------
 
+# 検索例２：述語と目的語を指定して「主語」の一覧を取得
+*“<述語>が<目的語>となる<?主語>は？”*  
+## 検索例2-1 「位置する行政区」（述語）が「寝屋川市」（目的語）となる「主語（?s）」の一覧を取得する　
 
+```
+select ?s ?sLabel
+where {
+   ?s wdt:P131 wd:Q389633 .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+}
+LIMIT 100
+```
+クエリを試す https://w.wiki/4oh
+
+---------------
+## 検索例2-2 「分類」（述語）が「大学」（目的語）となる「主語（?s）」の一覧を取得する　
+→「大学」の（インスタンスの）一覧を取得する  
+**instance of (P31)** という述語はデータ（インスタンス）， **「分類」** を表し，「同じ種類（クラス）のデータの一覧」を取得するのに利用できる．
+
+```
+select ?s ?sLabel
+where {
+   ?s wdt:P31 wd:Q3918 .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+}
+LIMIT 100
+```
+クエリを試す https://w.wiki/4oj
+
+---------------
+## 【演習２】述語と目的語を指定して「主語」の一覧を取得する
+### 演習2-a：「目的語」を変えて，いろんな種類（クラス）のデータ一覧を取得してみる
+**「検索例2-2」**  の **「目的語」** となるクラスを変える  
+クラスのIDは適当なデータの「Wikidataのページ」で，**instance of (P31)の目的語** を調べると良い．  
+
+### 演習2-b：「述語」と「目的語」の組み合わせを変えて，いろんなデータ一覧を取得してみる
+**「検索例2-1」**  の **「述語」** や **「目的語」** を変える  
+
+---------------
+
+
+# 参考なリンク集
+## SPARQL 1.1 Query Language (W3C Recommendation)
+https://www.w3.org/TR/sparql11-query/   
+→日本語訳　http://www.asahi-net.or.jp/~ax2s-kmtn/internet/rdf/REC-sparql11-query-20130321.html
+
+
+## Wikidataのプロパティ一覧（抜粋）
+https://www.wikidata.org/wiki/Wikidata:List_of_properties
+
+---
+
+# 関心のあるリソースのIRIを探す
+
+例）大阪電気通信大学のWikidata上でのIRI　　
+
+[http://www.wikidata.org/entity/Q7105556](http://www.wikidata.org/entity/Q7105556)
 
 
