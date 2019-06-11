@@ -1,5 +1,5 @@
 # SPARQLを用いたWikidataの検索演習
-WikidataのSPARQLエンドポイント（検索用API）  　
+WikidataのSPARQLエンドポイント（検索用API）    　
 https://query.wikidata.org/  　    
 を使った，SPARQLクエリの演習問題．  
 
