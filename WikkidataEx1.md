@@ -151,7 +151,7 @@ where {
 }
 LIMIT 100
 ```
-クエリを試す https://w.wiki/5kS
+クエリを試す https://w.wiki/5kY
 
 ---------------
 
