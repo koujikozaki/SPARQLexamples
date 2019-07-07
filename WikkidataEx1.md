@@ -142,16 +142,16 @@ LIMIT 100
   
 ※**「国が日本」** であることを確認した場合．
 ```
-select ?s ?sLabel?contry ?contryLabel
+select ?s ?sLabel?country ?countryLabel
 where {
    ?s wdt:P31 wd:Q3918 .
-   ?s wdt:P17 ?contry .
+   ?s wdt:P17 ?country .
    ?s wdt:P17 wd:Q17 .
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
 }
 LIMIT 100
 ```
-クエリを試す https://w.wiki/4on
+クエリを試す https://w.wiki/5kS
 
 ---------------
 
