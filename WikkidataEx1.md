@@ -130,9 +130,10 @@ LIMIT 100
 ## 検索例3-2 「大学の一覧」を「国（述語）が日本（目的語）」のものに絞り込む　
 
 ```
-select ?s ?sLabel
+select ?s ?sLabel ?country ?countryLabel
 where {
    ?s wdt:P31 wd:Q3918 .
+   ?s wdt:P17 ?country .
    ?s wdt:P17 wd:Q17 .
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
 }
@@ -142,7 +143,7 @@ LIMIT 100
   
 ※**「国が日本」** であることを確認した場合．
 ```
-select ?s ?sLabel?country ?countryLabel
+select ?s ?sLabel ?country ?countryLabel
 where {
    ?s wdt:P31 wd:Q3918 .
    ?s wdt:P17 ?country .
