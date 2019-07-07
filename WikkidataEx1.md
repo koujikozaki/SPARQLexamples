@@ -116,15 +116,15 @@ LIMIT 100
 ## 検索例3-1 「大学の一覧（主語）」を「国（述語）」の「目的語(?contry）」と共に取得する　
 
 ```
-select ?s ?sLabel?contry ?contryLabel
+select ?s ?sLabel ?country ?countryLabel
 where {
    ?s wdt:P31 wd:Q3918 .
-   ?s wdt:P17 ?contry .
+   ?s wdt:P17 ?country .
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
 }
 LIMIT 100
 ```
-クエリを試す https://w.wiki/4om
+クエリを試す https://w.wiki/5kU
 
 ---------------
 ## 検索例3-2 「大学の一覧」を「国（述語）が日本（目的語）」のものに絞り込む　
