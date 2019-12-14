@@ -194,6 +194,10 @@ LIMIT 100
 
 
 ---------------
+# 補足例
+以下，より詳細なクエリを作成するための補足例となります．
+
+----- 
 ## 補足１：PREFIXを利用しない表現
 
 ```
@@ -280,7 +284,7 @@ select (count (?s) AS ?c) where {
 
 ---------------
 ## 補足5：グループ化の利用  
-補足例） 「大学の一覧（主語）」を「国（述語）」の「目的語（?country）とそのラベル」と共に取得し，「国ごとのインスタンス数」を取得する
+補足例） 「大学の一覧（主語）」を「国（述語）」の「目的語（?country）とそのラベル」と共に取得し,「国ごとのインスタンス数」を取得する
 ```
 select ?country ?countryLabel (count(?s) As ?c)
 where {
@@ -291,13 +295,14 @@ where {
 ```
 クエリを試す　https://w.wiki/64D  
 
-補足例） 「大学の一覧（主語）」を「国（述語）」の「目的語（?country）とそのラベル」と共に取得し，「国ごとのインスタンス数」を取得し，多い順にソート．
+補足例） 「大学の一覧（主語）」を「国（述語）」の「目的語（?country）とそのラベル」と共に取得し，「国ごとのインスタンス数」を取得し，多い順にソート．
 ```
 select ?country ?countryLabel (count(?s) As ?c)
 where {
    ?s wdt:P31 wd:Q3918 .
    ?s wdt:P17 ?country .
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "ja". }
+  SERVICE wikibase:label {
+     bd:serviceParam wikibase:language "ja". }
 } GROUP BY ?country ?countryLabel
 ORDER BY DESC (?c)
 ```
@@ -314,10 +319,12 @@ where {
     ?s  wdt:P106/wdt:P279*   wd:Q715301 .
     ?s  wdt:P27  ?o .
 SERVICE wikibase:label { 
-bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
 } GROUP BY ?o ?oLabel
 ORDER BY DESC(?c)
 ```
+クエリを試す　https://w.wiki/Dqt  
+
 ---------------
 
 # 参考リンク集
