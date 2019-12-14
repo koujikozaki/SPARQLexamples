@@ -194,6 +194,54 @@ LIMIT 100
 
 
 ---------------
+## 補足１：PREFIXを利用しない表現
+
+```
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+select ?o
+where { 
+ wd:Q7105556 wdt:P131 ?o .
+}LIMIT 100
+```
+---------------
+## 補足２：SPARQLの省略表現
+省略前
+```
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select distinct ?p ?o where {
+  ?s rdfs:label "大阪"@ja .  
+  ?s ?p ?o.
+}LIMIT 100
+```
+省略表現
+```
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select distinct ?p ?o where {
+  ?s rdfs:label "大阪"@ja ;  
+     ?p ?o.
+}LIMIT 100
+```
+---------------
+## 補足3：ラベルの取得方法【RDF一般】
+「大阪電気通信大学」のラベルとなる目的語（?o）を取得  
+```
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select distinct ?o
+where { 
+   wd:Q7105556 rdfs:label ?o . 
+}LIMIT 100
+```
+クエリを試す　https://w.wiki/646  
+
+---------------
+
+
+---------------
+
+
 
 # 参考リンク集
 ## より複雑なクエリの例
