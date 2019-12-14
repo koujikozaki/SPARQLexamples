@@ -236,12 +236,89 @@ where {
 ```
 クエリを試す　https://w.wiki/646  
 
+------------
+「大阪電気通信大学」のラベルとなる目的語（?o）を取得
+「言語の種別」を合わせて取得
+```
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select  ?o (lang(?o) AS ?ln)
+where { 
+   wd:Q7105556 rdfs:label ?o . 
+}
+```
+クエリを試す 　https://w.wiki/648  　 
+
+------------ 
+補足例） 「大阪電気通信大学」のラベルとなる目的語（?o）を取得
+「言語の種別=日本語（ja）」をのみ
+```
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select  ?o (lang(?o) AS ?ln)
+where { 
+   wd:Q7105556 rdfs:label ?o . 
+   FILTER (lang(?o) = "ja") .
+}
+```
+クエリを試す https://w.wiki/64A  
+
+--------------- 
+## 補足4：カウントの利用  
+補足例） 「大学」のインスタンスの数を取得する  
+```
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+select (count (?s) AS ?c) where { 
+  ?s wdt:P31 wd:Q3918. 
+}
+```
+クエリを試す　https://w.wiki/64B 
+
 ---------------
+## 補足5：グループ化の利用  
+補足例） 「大学の一覧（主語）」を「国（述語）」の「目的語（?country）とそのラベル」と共に取得し，「国ごとのインスタンス数」を取得する
+```
+select ?country ?countryLabel (count(?s) As ?c)
+where {
+   ?s wdt:P31 wd:Q3918 .
+   ?s wdt:P17 ?country .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "ja". }
+} GROUP BY ?country ?countryLabel
+```
+クエリを試す　https://w.wiki/64D  
 
+補足例） 「大学の一覧（主語）」を「国（述語）」の「目的語（?country）とそのラベル」と共に取得し，「国ごとのインスタンス数」を取得し，多い順にソート．
+```
+select ?country ?countryLabel (count(?s) As ?c)
+where {
+   ?s wdt:P31 wd:Q3918 .
+   ?s wdt:P17 ?country .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "ja". }
+} GROUP BY ?country ?countryLabel
+ORDER BY DESC (?c)
+```
+クエリを試す https://w.wiki/64E  
 
 ---------------
+## 補足６：クラス階層を考慮したクエリ例
+例）「漫画家」を「国籍」毎にランキングする  
+`/wdt:P279*`を“入れる/入れない”で結果が変わる
 
-
+```
+select ?o ?oLabel (count(?s) As ?c) 
+where { 
+    ?s  wdt:P106/wdt:P279*   wd:Q715301 .
+    ?s  wdt:P27  ?o .
+SERVICE wikibase:label { 
+bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+} GROUP BY ?o ?oLabel
+ORDER BY DESC(?c)
+```
+---------------
 
 # 参考リンク集
 ## より複雑なクエリの例
