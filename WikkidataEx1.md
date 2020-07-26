@@ -199,7 +199,10 @@ LIMIT 100
 
 ----- 
 ## 補足１：PREFIXを利用しない表現
-
+### PREFIXの定義
+上述の例1-1）「大阪電気通信大学」（主語）の「位置する行政区」（述語）となる目的語（?o）を取得する  
+において，PREFIXの定義を明記すると下記のようになる.  
+※WikidataのEndpointでクエリを発行する際は，これらのWikidataに関するPREFIXの定義は省略可．
 ```
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -207,6 +210,15 @@ select ?o
 where { 
  wd:Q7105556 wdt:P131 ?o .
 }LIMIT 100
+```
+### PREFIXを利用しない表現
+例1-1）をPREFIX（接頭語）を用いず書いた場合は，下記のようになる．
+```
+select ?o
+where { 
+   <http://www.wikidata.org/entity/Q7105556> <http://www.wikidata.org/prop/direct/P131> ?o . 
+}LIMIT 100
+
 ```
 ---------------
 ## 補足２：SPARQLの省略表現
