@@ -141,7 +141,7 @@ LIMIT 100
 ```
 クエリを試す https://w.wiki/4oo  
   
-※**「国が日本」** であることを確認した場合．
+※**「国が日本」** であることを確認したい場合．
 ```
 select ?s ?sLabel ?country ?countryLabel
 where {
