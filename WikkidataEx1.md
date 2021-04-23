@@ -230,7 +230,7 @@ select distinct ?p ?o where {
   ?s ?p ?o.
 }LIMIT 100
 ```
-省略表現
+省略表現：**連続する主語(?s)を省略**．主語が連続することを示すために行末を **「．」→「；」** にする
 ```
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 select distinct ?p ?o where {
