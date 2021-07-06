@@ -72,6 +72,29 @@ where {
 →ページ上部の「Q○○○○○○」の番号を使えばよい．
 
 ---------------
+## （参考）述語（プロパティ）を調べるクエリ
+例）「大阪電気通信大学（Q7105556）」を主語とする述語（プロパティ）の一覧を取得する
+```
+select DISTINCT ?p
+where {
+   wd:Q7105556 ?p ?o .
+}
+```
+クエリを試す　https://w.wiki/3bZG  
+※IDが**PXX**の述語が何種類か見つかるが，Wikidataを対象とするSPARQLでは**wdt:PXX**のものを使用する．  
+
+検索した述語の「ラベル」を合わせて取得したいときは，Wikidataでは下記のようなクエリを用いる．
+```
+select DISTINCT ?p ?pLabel
+where {
+   wd:Q7105556 ?p ?o .
+   ?prop wikibase:directClaim ?p .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+}
+```
+クエリを試す　https://w.wiki/3bZM    
+
+---------------
 
 # 検索例２：述語と目的語を指定して「主語」の一覧を取得
 *“<述語>が<目的語>となる<?主語>は？”*  
