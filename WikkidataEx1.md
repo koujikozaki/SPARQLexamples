@@ -72,7 +72,7 @@ where {
 →ページ上部の「Q○○○○○○」の番号を使えばよい．
 
 ---------------
-## （参考）述語（プロパティ）を調べるクエリ
+## （参考）述語（プロパティ）を調べるクエリ  
 例）「大阪電気通信大学（Q7105556）」を主語とする述語（プロパティ）の一覧を取得する
 ```
 select DISTINCT ?p
@@ -83,7 +83,8 @@ where {
 クエリを試す　https://w.wiki/3bZG  
 ※IDが**PXX**の述語が何種類か見つかるが，Wikidataを対象とするSPARQLでは**wdt:PXX**のものを使用する．  
 
-検索した述語の「ラベル」を合わせて取得したいときは，Wikidataでは下記のようなクエリを用いる．
+検索した述語の「ラベル」を合わせて取得したいときは，Wikidataでは下記のようなクエリを用いる．  
+参考　https://heardlibrary.github.io/digital-scholarship/lod/wikibase/  
 ```
 select DISTINCT ?p ?pLabel
 where {
