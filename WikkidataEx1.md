@@ -344,6 +344,33 @@ ORDER BY DESC (?c)
 ```
 クエリを試す https://w.wiki/64E  
 
+### グループ化の利用例
+鉄道総路線の全長をランキングしてみる
+```
+select ?s ?sLabel ?o
+where { 
+ ?s  wdt:P31   wd:Q728937 .
+ ?s  wdt:P17  wd:Q17.
+ ?s  wdt:P2043  ?o.
+SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+}order by desc(?o)
+```
+クエリを試す https://w.wiki/4i6  
+  
+鉄道路線を運営会社ごとにグループ化し，運営会社ごとの路線の全長の「合計」を求めてランキングする
+```
+select (SUM(?o) as ?total) ?op ?opLabel
+where { 
+ ?s  wdt:P31   wd:Q728937 .
+ ?s  wdt:P17  wd:Q17.
+ ?s  wdt:P2043  ?o.
+ ?s wdt:P137 ?op.
+SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+}GROUP BY ?op ?opLabel
+order by desc(?total)
+```
+クエリを試す https://w.wiki/4iE
+
 ---------------
 ## 補足６：クラス階層を考慮したクエリ例
 例）「漫画家」を「国籍」毎にランキングする  
