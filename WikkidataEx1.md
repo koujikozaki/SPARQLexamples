@@ -157,7 +157,6 @@ LIMIT 100
 select ?s ?sLabel ?country ?countryLabel
 where {
    ?s wdt:P31 wd:Q3918 .
-   ?s wdt:P17 ?country .
    ?s wdt:P17 wd:Q17 .
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
 }
@@ -344,6 +343,42 @@ ORDER BY DESC (?c)
 ```
 クエリを試す https://w.wiki/64E  
 
+---------------
+## 補足６：クラス階層を考慮したクエリ例
+例）「漫画家」を「国籍」毎にランキングする  
+`/wdt:P279*`を“入れる/入れない”で結果が変わる
+
+```
+select ?o ?oLabel (count(?s) As ?c) 
+where { 
+    ?s  wdt:P106/wdt:P279*   wd:Q715301 .
+    ?s  wdt:P27  ?o .
+SERVICE wikibase:label { 
+bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+} GROUP BY ?o ?oLabel
+ORDER BY DESC(?c)
+```
+クエリを試す　https://w.wiki/Dqt  
+
+---------------
+## 補足７：OPTIONAL（あれば検索…）の利用
+例）日本の大学一覧を取得し，「短縮名（wdt:P1813）」があれば合わせて表示する．
+```
+select ?s ?sLabel ?o ?o2 
+where {
+   ?s wdt:P31 wd:Q3918 . # ?Sの「分類」が「大学」
+   ?s wdt:P17 wd:Q17 .   # ?sの「国」が「日本」
+   ?s wdt:P571 ?o .      # ?sの「設立」を?oとする
+   OPTIONAL{
+     ?s wdt:P1813 ?o2 .  # ?sの「短縮名」を?o2とする　
+   }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+}
+LIMIT 100
+```
+クエリを試す　https://w.wiki/3D$8 
+
+---------------
 ### グループ化の利用例
 鉄道総路線の全長をランキングしてみる
 ```
@@ -370,23 +405,6 @@ SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja".
 order by desc(?total)
 ```
 クエリを試す https://w.wiki/4iE
-
----------------
-## 補足６：クラス階層を考慮したクエリ例
-例）「漫画家」を「国籍」毎にランキングする  
-`/wdt:P279*`を“入れる/入れない”で結果が変わる
-
-```
-select ?o ?oLabel (count(?s) As ?c) 
-where { 
-    ?s  wdt:P106/wdt:P279*   wd:Q715301 .
-    ?s  wdt:P27  ?o .
-SERVICE wikibase:label { 
-bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
-} GROUP BY ?o ?oLabel
-ORDER BY DESC(?c)
-```
-クエリを試す　https://w.wiki/Dqt  
 
 ---------------
 
