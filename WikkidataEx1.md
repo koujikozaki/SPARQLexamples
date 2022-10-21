@@ -379,7 +379,54 @@ LIMIT 100
 クエリを試す　https://w.wiki/3D$8 
 
 ---------------
-### グループ化の利用例
+# Wikidataを用いたランキング例
+
+## 「日本の政治家の出身大学」ランキング
+```
+select ?univ ?univl (count(?s) As ?c) where{
+?univ wdt:P31/wdt:P279* wd:Q3918.
+?s  wdt:P27  wd:Q17;
+    wdt:P106 wd:Q82955;
+    wdt:P69  ?univ.
+OPTIONAL{
+    ?s  rdfs:label  ?name.
+    FILTER(lang(?name)="ja")
+    ?univ rdfs:label ?univl .
+    FILTER (lang(?univl) = "ja") .
+  }
+}
+GROUP BY ?univ ?univl
+ORDER BY DESC(?c)
+LIMIT 100
+```
+クエリを試す　https://w.wiki/4Vh
+
+## 「日本の総理大臣の出身大学」ランキング
+```
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+select ?univ ?univl (count(?s) As ?c) where{
+?univ wdt:P31/wdt:P279* wd:Q3918.
+?s  wdt:P27  wd:Q17;
+    wdt:P106 wd:Q82955;
+    wdt:P39  wd:Q274948;
+    wdt:P69  ?univ.
+OPTIONAL{
+    ?s  rdfs:label  ?name.
+    FILTER(lang(?name)="ja")
+    ?univ rdfs:label ?univl .
+    FILTER (lang(?univl) = "ja") .
+  }
+}
+GROUP BY ?univ ?univl
+ORDER BY DESC(?c)
+LIMIT 100
+```
+クエリを試す　https://w.wiki/Kzm
+
+## 鉄道路線の総線長の取得
 鉄道総路線の全長をランキングしてみる
 ```
 select ?s ?sLabel ?o
@@ -391,7 +438,8 @@ SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja".
 }order by desc(?o)
 ```
 クエリを試す https://w.wiki/4i6  
-  
+
+## 鉄道運営会社ごとの路線全長の合計
 鉄道路線を運営会社ごとにグループ化し，運営会社ごとの路線の全長の「合計」を求めてランキングする
 ```
 select (SUM(?o) as ?total) ?op ?opLabel
