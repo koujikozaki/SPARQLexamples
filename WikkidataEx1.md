@@ -381,50 +381,34 @@ LIMIT 100
 ---------------
 # Wikidataを用いたランキング例
 
-## 「日本の政治家の出身大学」ランキング
+## 「日本の政治家の出身校」ランキング
 ```
-select ?univ ?univl (count(?s) As ?c) where{
-?univ wdt:P31/wdt:P279* wd:Q3918.
-?s  wdt:P27  wd:Q17;
-    wdt:P106 wd:Q82955;
-    wdt:P69  ?univ.
-OPTIONAL{
-    ?s  rdfs:label  ?name.
-    FILTER(lang(?name)="ja")
-    ?univ rdfs:label ?univl .
-    FILTER (lang(?univl) = "ja") .
-  }
-}
-GROUP BY ?univ ?univl
+select ?univ ?univLabel (count(?s) As ?c) where{
+?s  wdt:P27  wd:Q17;      #国籍＝日本 
+    wdt:P106 wd:Q82955;   #職業＝政治家
+    wdt:P69  ?univ.       #出身校
+SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}GROUP BY ?univ ?univLabel
+ORDER BY DESC(?c)
+LIMIT 100
+
+```
+クエリを試す　https://w.wiki/5sRi
+
+## 「日本の総理大臣の出身校」ランキング
+```
+select ?univ ?univLabel (count(?s) As ?c) where{
+?s  wdt:P27  wd:Q17;      #国籍＝日本 
+    wdt:P106 wd:Q82955;   #職業＝政治家
+    wdt:P39  wd:Q274948;  #公職＝内閣総理大臣
+    wdt:P69  ?univ.       #出身校
+?univ wdt:P31/wdt:P279* wd:Q3918.#大学の一覧に絞り込み
+SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}GROUP BY ?univ ?univLabel
 ORDER BY DESC(?c)
 LIMIT 100
 ```
-クエリを試す　https://w.wiki/4Vh
-
-## 「日本の総理大臣の出身大学」ランキング
-```
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-PREFIX wd: <http://www.wikidata.org/entity/>
-
-select ?univ ?univl (count(?s) As ?c) where{
-?univ wdt:P31/wdt:P279* wd:Q3918.
-?s  wdt:P27  wd:Q17;
-    wdt:P106 wd:Q82955;
-    wdt:P39  wd:Q274948;
-    wdt:P69  ?univ.
-OPTIONAL{
-    ?s  rdfs:label  ?name.
-    FILTER(lang(?name)="ja")
-    ?univ rdfs:label ?univl .
-    FILTER (lang(?univl) = "ja") .
-  }
-}
-GROUP BY ?univ ?univl
-ORDER BY DESC(?c)
-LIMIT 100
-```
-クエリを試す　https://w.wiki/Kzm
+クエリを試す　https://w.wiki/5sRm
 
 ## 鉄道路線の総線長の取得
 鉄道総路線の全長をランキングしてみる
