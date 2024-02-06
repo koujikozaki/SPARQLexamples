@@ -1,7 +1,7 @@
 # SPARQLを用いたWikidataの検索演習
 WikidataのSPARQLエンドポイント（検索用API）  
 https://query.wikidata.org/  　    
-を使った，SPARQLクエリの演習問題．  
+を使った，SPARQLクエリの演習問題．
 
 検索例を試した後，検索例のクエリの「一部を変更」して，いろんなクエリを作成してみる．
 
@@ -377,6 +377,40 @@ where {
 LIMIT 100
 ```
 クエリを試す　https://w.wiki/3D$8 
+
+OPTIONALを複数使った例
+```
+select ?s ?sLabel ?o ?o2 
+where {
+   ?s wdt:P31 wd:Q3918 . # ?Sの「分類」が「大学」
+   ?s wdt:P17 wd:Q17 .   # ?sの「国」が「日本」
+   ?s wdt:P571 ?o .      # ?sの「設立」を?oとする
+   OPTIONAL{
+     ?s wdt:P1813 ?o2 .  # ?sの「短縮名」を?o2とする　
+   }
+   OPTIONAL{
+     ?s wdt:P137 ?o3 . # ?sの「運営者」を?o3とする
+   }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+}
+LIMIT 100
+```
+クエリを試す　https://w.wiki/3D$5
+
+---------------
+## 補足８：UNION（または…）を利用したOR検索
+例）「所在地（wdt:P131）が大阪府」または「所在地（wdt:P131）が京都府」の日本の大学一覧を取得．
+```
+select ?s ?sLabel ?o ?oLabel
+where {
+   ?s wdt:P31 wd:Q3918 . # ?Sの「分類」が「大学」
+   ?s wdt:P17 wd:Q17 .   # ?sの「国」が「日本」
+   ?s wdt:P131 ?o .      # ?sの「所在地」
+   {?s wdt:P131 wd:Q122723}        # ?sの「所在地」が「大阪府」
+    UNION {?s wdt:P131 wd:Q120730} # ?sの「所在地」が「京都府」
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+```
+クエリを試す　https://w.wiki/96A3
 
 ---------------
 # Wikidataを用いたランキング例
