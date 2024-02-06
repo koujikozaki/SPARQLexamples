@@ -427,7 +427,7 @@ ORDER BY DESC(?c)
 LIMIT 100
 
 ```
-クエリを試す　https://w.wiki/5sRi
+クエリを試す　https://w.wiki/96GP　
 
 ## 「日本の総理大臣の出身校」ランキング
 ```
@@ -442,7 +442,7 @@ SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en".
 ORDER BY DESC(?c)
 LIMIT 100
 ```
-クエリを試す　https://w.wiki/5sRm
+クエリを試す　https://w.wiki/96GM　
 
 ## 鉄道路線の総線長の取得
 鉄道総路線の全長をランキングしてみる
