@@ -442,7 +442,7 @@ SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en".
 ORDER BY DESC(?c)
 LIMIT 100
 ```
-クエリを試す　https://w.wiki/96GM　
+クエリを試す　https://w.wiki/96GM
 
 ## 鉄道路線の総線長の取得
 鉄道総路線の全長をランキングしてみる
@@ -455,7 +455,7 @@ where {
 SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
 }order by desc(?o)
 ```
-クエリを試す https://w.wiki/4i6  
+クエリを試す https://w.wiki/4i6
 
 ## 鉄道運営会社ごとの路線全長の合計
 鉄道路線を運営会社ごとにグループ化し，運営会社ごとの路線の全長の「合計」を求めてランキングする
