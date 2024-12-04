@@ -374,9 +374,8 @@ where {
    }
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
 }
-LIMIT 100
 ```
-クエリを試す　https://w.wiki/3D$8 
+クエリを試す　https://w.wiki/CJHH 
 
 OPTIONALを複数使った例
 ```
@@ -393,9 +392,8 @@ where {
    }
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
 }
-LIMIT 100
 ```
-クエリを試す　https://w.wiki/3D$5
+クエリを試す　https://w.wiki/CJHT
 
 ---------------
 ## 補足８：UNION（または…）を利用したOR検索
