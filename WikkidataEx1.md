@@ -318,24 +318,7 @@ select (count (?s) AS ?c) where {
 クエリを試す　https://w.wiki/64B 
 
 ---------------
-## 補足5：クラス階層を考慮したクエリ例
-例）「漫画家」を「国籍」毎にランキングする  
-`/wdt:P279*`を“入れる/入れない”で結果が変わる
-
-```
-select ?o ?oLabel (count(?s) As ?c) 
-where { 
-    ?s  wdt:P106/wdt:P279*   wd:Q715301 .
-    ?s  wdt:P27  ?o .
-SERVICE wikibase:label { 
-bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
-} GROUP BY ?o ?oLabel
-ORDER BY DESC(?c)
-```
-クエリを試す　https://w.wiki/Dqt  
-
----------------
-## 補足6：グループ化の利用  
+## 補足5：グループ化の利用  
 補足例） 「大学の一覧（主語）」を「国（述語）」の「目的語（?country）とそのラベル」と共に取得し,「国ごとのインスタンス数」を取得する
 ```
 select ?country ?countryLabel (count(?s) As ?c)
@@ -361,6 +344,23 @@ ORDER BY DESC (?c)
 クエリを試す https://w.wiki/64E  
 
 ---------------
+## 補足6：クラス階層を考慮したクエリ例
+例）「漫画家」を「国籍」毎にランキングする  
+`/wdt:P279*`を“入れる/入れない”で結果が変わる
+
+```
+select ?o ?oLabel (count(?s) As ?c) 
+where { 
+    ?s  wdt:P106/wdt:P279*   wd:Q715301 .
+    ?s  wdt:P27  ?o .
+SERVICE wikibase:label { 
+bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+} GROUP BY ?o ?oLabel
+ORDER BY DESC(?c)
+```
+クエリを試す　https://w.wiki/Dqt  
+
+---------------
 ## 補足７：OPTIONAL（あれば検索…）の利用
 例）日本の大学一覧を取得し，「短縮名（wdt:P1813）」があれば合わせて表示する．
 ```
@@ -375,7 +375,7 @@ where {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
 }
 ```
-クエリを試す　https://w.wiki/CJHH 
+クエリを試す　https://w.wiki/CJH9
 
 OPTIONALを複数使った例
 ```
