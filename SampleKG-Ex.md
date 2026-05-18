@@ -3,7 +3,7 @@
 人物相関図から作成した[RDFデータ `SampleKG.ttl`](KG/SampleKG.ttl) を使って、SPARQLの基本的な使い方を確認するためのサンプルクエリです。
 
 サンプルのRDFデータは、[TSV2KG Editor](https://github.com/oecu-kozaki-lab/TSV2KG-Editor)を用いて作成しました。  
-→[サンプルをTSV2KG Editorで開く](https://oecu-kozaki-lab.github.io/TSV2KG-Editor/?tsv=https://raw.githubusercontent.com/koujikozaki/SPARQLexamples/refs/heads/master/KG/SampleKG.txt&view=1)
+→[サンプルをTSV2KG Editorで開く](https://oecu-kozaki-lab.github.io/TSV2KG-Editor/?tsv=https://koujikozaki.github.io/SPARQLexamples/KG/SampleKG.txt&view=1)
 
 ## 共通PREFIX
 
