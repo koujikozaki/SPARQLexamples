@@ -1,7 +1,20 @@
 # SPARQLを用いたWikidataの検索演習
 WikidataのSPARQLエンドポイント（検索用API）  
-https://query.wikidata.org/  　    
+https://query-next.wikidata.org/  　    
 を使った，SPARQLクエリの演習問題．
+
+> **【WikidataのSPARQLエンドポイントの変更について】**  
+> Wikidataの公式サイトにて，Wikidata Query Service（WDQS）のバックエンドを **Blazegraph から QLever に移行** することが発表されている．  
+> - 新しいエンドポイント（v2）https://query-next.wikidata.org/ は **2026年11月23日** から利用できる．  
+> - 従来のエンドポイント（v1）https://query.wikidata.org/ も **2027年6月まで** は利用できるが，**2027年2月頃から性能が低下** する予定．また，旧URLはいずれ新URLへ転送（リダイレクト）される予定．  
+> - 移行の目的は，Wikidataのデータ量の増加に対応し，検索サービスの安定性・性能・持続性を高めること．  
+> - 新しいエンドポイントも同じSPARQLで検索できるが，SPARQL 1.1 の標準に厳密に従うため，Blazegraph独自の機能（`wikibase:mwapi` など）を使うクエリは書き換えが必要な場合がある．なお，本演習で使っているラベル取得（`SERVICE wikibase:label`）は書き換え不要．  
+>
+> 詳細は公式サイトを参照．  
+> - [WDQS backend update（移行の概要・スケジュール）](https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/WDQS_backend_update)  
+> - [Migration Guide（クエリの書き換え方法）](https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/WDQS_backend_update/Migrate)  
+>
+> ※本資料の「クエリを試す」のリンクは，新しいエンドポイント（query-next）で開くように更新済み．
 
 検索例を試した後，検索例のクエリの「一部を変更」して，いろんなクエリを作成してみる．
 
@@ -15,7 +28,7 @@ where {
    wd:Q7105556 wdt:P131 ?o .
 }
 ```
-クエリを試す https://w.wiki/4oY
+クエリを試す https://w.wiki/36z$t
 
 ---------------
 ## 検索例１-1：主語と述語を指定して「目的語」を取得する【目的語がリテラルの場合】
@@ -27,7 +40,7 @@ where {
    wd:Q7105556 wdt:P571 ?o .
 }
 ```
-クエリを試す　https://w.wiki/4od
+クエリを試す　https://w.wiki/36z$$
 
 ---------------
 ## 検索例１-2：主語と述語を指定して「目的語」を取得する【ラベルも取得】
@@ -40,7 +53,7 @@ where {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
 }
 ```
-クエリを試す　https://w.wiki/4oZ
+クエリを試す　https://w.wiki/36$28
 
 
 ---------------
@@ -57,7 +70,7 @@ where {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
 }
 ```
-クエリを試す　https://w.wiki/4of
+クエリを試す　https://w.wiki/36$2G
 
 ---------------
 ## 【演習１】主語と述語を指定して「目的語」を取得する
@@ -80,7 +93,7 @@ where {
    wd:Q7105556 ?p ?o .
 }
 ```
-クエリを試す　https://w.wiki/3bZG  
+クエリを試す　https://w.wiki/36$2N  
 ※IDが**PXX**の述語が何種類か見つかるが，Wikidataを対象とするSPARQLでは**wdt:PXX**のものを使用する．  
 
 検索した述語の「ラベル」を合わせて取得したいときは，Wikidataでは下記のようなクエリを用いる．  
@@ -93,7 +106,7 @@ where {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
 }
 ```
-クエリを試す　https://w.wiki/3bZM    
+クエリを試す　https://w.wiki/36$2a    
 
 ---------------
 
@@ -109,7 +122,7 @@ where {
 }
 LIMIT 100
 ```
-クエリを試す https://w.wiki/4oh
+クエリを試す https://w.wiki/36$2j
 
 ---------------
 ## 検索例2-2 「分類」（述語）が「大学」（目的語）となる「主語（?s）」の一覧を取得する　
@@ -124,7 +137,7 @@ where {
 }
 LIMIT 100
 ```
-クエリを試す https://w.wiki/4oj
+クエリを試す https://w.wiki/36$2q
 
 ---------------
 ## 【演習２】述語と目的語を指定して「主語」の一覧を取得する
@@ -148,13 +161,13 @@ where {
 }
 LIMIT 100
 ```
-クエリを試す https://w.wiki/5kU
+クエリを試す https://w.wiki/36$33
 
 ---------------
 ## 検索例3-2 「大学の一覧」を「国（述語）が日本（目的語）」のものに絞り込む　
 
 ```
-select ?s ?sLabel ?country ?countryLabel
+select ?s ?sLabel
 where {
    ?s wdt:P31 wd:Q3918 .
    ?s wdt:P17 wd:Q17 .
@@ -162,7 +175,7 @@ where {
 }
 LIMIT 100
 ```
-クエリを試す https://w.wiki/4oo  
+クエリを試す https://w.wiki/36$37  
   
 ※**「国が日本」** であることを確認したい場合．
 ```
@@ -175,7 +188,7 @@ where {
 }
 LIMIT 100
 ```
-クエリを試す https://w.wiki/5kY
+クエリを試す https://w.wiki/36$MQ
 
 ---------------
 
@@ -191,7 +204,7 @@ where {
 }
 LIMIT 100
 ```
-クエリを試す https://w.wiki/4os
+クエリを試す https://w.wiki/36$Ne
 
 ### 検索例3-3-a 「設立日」で並び替え
 ```
@@ -204,7 +217,7 @@ where {
 }ORDER BY ?o    # ?o(設立日)で並び替え →DESC(?o)とする「降順」に
 LIMIT 100
 ```
-クエリを試す　https://w.wiki/4ou
+クエリを試す　https://w.wiki/36$Pj
 
 ---------------
 ## 【演習３】いろんなデータの一覧を取得してみる
@@ -273,7 +286,7 @@ where {
    wd:Q7105556 rdfs:label ?o . 
 }LIMIT 100
 ```
-クエリを試す　https://w.wiki/646  
+クエリを試す　https://w.wiki/36$R8  
 
 ------------
 「大阪電気通信大学」のラベルとなる目的語（?o）を取得
@@ -287,7 +300,7 @@ where {
    wd:Q7105556 rdfs:label ?o . 
 }
 ```
-クエリを試す 　https://w.wiki/648  　 
+クエリを試す 　https://w.wiki/36$SV  　 
 
 ------------ 
 補足例） 「大阪電気通信大学」のラベルとなる目的語（?o）を取得
@@ -302,7 +315,7 @@ where {
    FILTER (lang(?o) = "ja") .
 }
 ```
-クエリを試す https://w.wiki/64A  
+クエリを試す https://w.wiki/36$TW  
 
 --------------- 
 ## 補足4：カウントの利用  
@@ -315,7 +328,7 @@ select (count (?s) AS ?c) where {
   ?s wdt:P31 wd:Q3918. 
 }
 ```
-クエリを試す　https://w.wiki/64B 
+クエリを試す　https://w.wiki/36$UU 
 
 ---------------
 ## 補足5：グループ化の利用  
@@ -328,7 +341,7 @@ where {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "ja". }
 } GROUP BY ?country ?countryLabel
 ```
-クエリを試す　https://w.wiki/64D  
+クエリを試す　https://w.wiki/36$VY  
 
 補足例） 「大学の一覧（主語）」を「国（述語）」の「目的語（?country）とそのラベル」と共に取得し，「国ごとのインスタンス数」を取得し，多い順にソート．
 ```
@@ -341,7 +354,7 @@ where {
 } GROUP BY ?country ?countryLabel
 ORDER BY DESC (?c)
 ```
-クエリを試す https://w.wiki/64E  
+クエリを試す https://w.wiki/36$WR  
 
 ---------------
 ## 補足6：クラス階層を考慮したクエリ例
@@ -358,7 +371,7 @@ bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
 } GROUP BY ?o ?oLabel
 ORDER BY DESC(?c)
 ```
-クエリを試す　https://w.wiki/Dqt  
+クエリを試す　https://w.wiki/36$XC  
 
 ---------------
 ## 補足７：OPTIONAL（あれば検索…）の利用
@@ -375,7 +388,7 @@ where {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
 }
 ```
-クエリを試す　https://w.wiki/CJH9
+クエリを試す　https://w.wiki/37252
 
 OPTIONALを複数使った例
 ```
@@ -393,7 +406,7 @@ where {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
 }
 ```
-クエリを試す　https://w.wiki/CJHT
+クエリを試す　https://w.wiki/3726M
 
 ---------------
 ## 補足８：UNION（または…）を利用したOR検索
@@ -407,8 +420,9 @@ where {
    {?s wdt:P131 wd:Q122723}        # ?sの「所在地」が「大阪府」
     UNION {?s wdt:P131 wd:Q120730} # ?sの「所在地」が「京都府」
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
+}
 ```
-クエリを試す　https://w.wiki/96A3
+クエリを試す　https://w.wiki/373Mg
 
 ---------------
 # Wikidataを用いたランキング例
@@ -425,7 +439,7 @@ ORDER BY DESC(?c)
 LIMIT 100
 
 ```
-クエリを試す　https://w.wiki/96GP　
+クエリを試す　https://w.wiki/3728e　
 
 ## 「日本の総理大臣の出身校」ランキング
 ```
@@ -440,7 +454,7 @@ SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en".
 ORDER BY DESC(?c)
 LIMIT 100
 ```
-クエリを試す　https://w.wiki/96GM
+クエリを試す　https://w.wiki/3729W
 
 ## 鉄道路線の総線長の取得
 鉄道総路線の全長をランキングしてみる
@@ -453,7 +467,7 @@ where {
 SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja". }
 }order by desc(?o)
 ```
-クエリを試す https://w.wiki/4i6
+クエリを試す https://w.wiki/372AD
 
 ## 鉄道運営会社ごとの路線全長の合計
 鉄道路線を運営会社ごとにグループ化し，運営会社ごとの路線の全長の「合計」を求めてランキングする
@@ -468,7 +482,7 @@ SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ja".
 }GROUP BY ?op ?opLabel
 order by desc(?total)
 ```
-クエリを試す https://w.wiki/4iE
+クエリを試す https://w.wiki/372BB
 
 ---------------
 
