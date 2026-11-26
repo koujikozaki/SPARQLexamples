@@ -439,7 +439,7 @@ ORDER BY DESC(?c)
 LIMIT 100
 
 ```
-クエリを試す　https://w.wiki/3728e　
+クエリを試す　https://w.wiki/3728e
 
 ## 「日本の総理大臣の出身校」ランキング
 ```
